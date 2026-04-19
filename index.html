@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ご祈祷・祭典お申込みフォーム</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:'Hiragino Sans','Hiragino Kaku Gothic ProN','Noto Sans JP',sans-serif}
+body{background:#f5f0eb;color:#2c2c2a;min-height:100vh}
+.wrap{max-width:860px;margin:0 auto;padding:16px}
+.tabs{display:flex;border-bottom:1px solid #d4b99a;overflow-x:auto;background:#fff;border-radius:10px 10px 0 0}
+.tab{padding:11px 16px;font-size:13px;cursor:pointer;color:#888;border-bottom:2px solid transparent;background:none;border-top:none;border-left:none;border-right:none;white-space:nowrap;flex-shrink:0}
+.tab.active{color:#7A3B0F;border-bottom:2px solid #7A3B0F;font-weight:600}
+.view{display:none;padding:0}.view.active{display:block}
+.sh{background:#7A3B0F;color:#fff;padding:13px 20px;display:flex;align-items:center;gap:10px}
+.sh h2{font-size:15px;font-weight:600}.sh .sub{font-size:11px;opacity:.75;margin-left:auto}
+.fw{background:#fff;padding:20px;border-radius:0 0 10px 10px;border:1px solid #ddd}
+.fs{margin-bottom:20px}
+.fs h3{font-size:13px;font-weight:600;color:#7A3B0F;margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid #eeebe6}
+.fr{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:9px;margin-bottom:9px}
+.fg{display:flex;flex-direction:column;gap:3px}
+.fg label{font-size:12px;color:#777}
+.fg input,.fg select,.fg textarea{width:100%;padding:8px 9px;border:1px solid #ccc;border-radius:8px;font-size:13px;color:#333;background:#fff}
+.fg textarea{resize:vertical;min-height:58px;line-height:1.5}
+.grplabel{font-size:12px;font-weight:600;color:#7A3B0F;margin-bottom:6px;margin-top:12px}
+.grplabel:first-child{margin-top:0}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:5px}
+.chip{padding:6px 13px;border-radius:20px;font-size:13px;cursor:pointer;border:1px solid #ccc;background:#f5f5f5;color:#555;user-select:none}
+.chip.on{background:#7A3B0F;color:#fff;border-color:#7A3B0F}
+.kdivider{height:1px;background:#eeebe6;margin:12px 0}
+.otnote{display:none;margin-top:7px}.otnote.show{display:block}
+.otnote label{font-size:12px;color:#777;display:block;margin-bottom:3px}
+.otnote textarea{width:100%;padding:7px 9px;border:1px solid #ccc;border-radius:8px;font-size:13px;resize:vertical;min-height:56px;line-height:1.5}
+.shutcho-extra{display:none;margin-top:12px;background:#fdf6f0;border:1px solid #d4956a;border-radius:10px;padding:14px}
+.shutcho-extra.show{display:block}
+.shutcho-extra h4{font-size:13px;font-weight:600;color:#7A3B0F;margin-bottom:10px}
+.radio-group{display:flex;flex-direction:column;gap:8px}
+.radio-opt{display:flex;align-items:flex-start;gap:9px;cursor:pointer;padding:10px 12px;border-radius:8px;border:1px solid #ccc;background:#fff}
+.radio-opt.sel{border-color:#7A3B0F;background:rgba(122,59,15,0.04)}
+.radio-opt input[type=radio]{margin-top:2px;accent-color:#7A3B0F;flex-shrink:0}
+.rlabel{font-size:13px;color:#333;font-weight:600}
+.rsub{font-size:12px;color:#777;margin-top:2px}
+.tb1{border-radius:8px;padding:11px;margin-bottom:7px;border:1px solid #d4956a;background:#fdf6f0}
+.tb2,.tb3{border-radius:8px;padding:11px;margin-bottom:7px;border:1px solid #ddd;background:#f9f9f9}
+.tblabel{font-size:12px;font-weight:600;margin-bottom:7px;color:#7A3B0F}
+.tb2 .tblabel,.tb3 .tblabel{color:#888}
+.tsel{display:flex;align-items:center;gap:5px}
+.tsel select{padding:7px 5px;border:1px solid #ccc;border-radius:7px;font-size:13px}
+.tsel .hr{width:64px}.tsel .mn{width:58px}
+.tsel span{font-size:13px;color:#777}
+.mbox{background:#f9f9f9;border-radius:8px;padding:11px;margin-bottom:7px;border:1px solid #ddd}
+.mbox .mn{font-size:13px;font-weight:600;color:#333}
+.mbox .mi{font-size:12px;color:#777;margin-top:3px}
+.bdg{display:inline-block;font-size:11px;padding:2px 7px;border-radius:10px;margin-left:4px;font-weight:600}
+.by{background:#FDE8C8;color:#7A4000}.bs{background:#E8F0FE;color:#1A3F8F}
+.bpend{background:#f0f0f0;color:#666}.bconf{background:#e8f5e9;color:#2e7d32}
+.nbox{background:#f9f9f9;border:1px solid #ddd;border-radius:10px;padding:14px}
+.nbox p{font-size:13px;color:#666;line-height:1.7;margin-bottom:11px}
+.nchks{display:flex;flex-direction:column;gap:7px}
+.nchk{display:flex;align-items:flex-start;gap:8px;cursor:pointer}
+.nchk input{width:15px;height:15px;margin-top:2px;flex-shrink:0;accent-color:#7A3B0F}
+.nct{font-size:13px;color:#333;line-height:1.5}
+.ncs{font-size:12px;color:#777}
+.nmeth{margin-top:11px;padding-top:10px;border-top:1px solid #eee;display:none}.nmeth.show{display:block}
+.nmeth label{font-size:12px;color:#777;display:block;margin-bottom:5px}
+.btnm{width:100%;background:#7A3B0F;color:#fff;border:none;border-radius:8px;padding:13px;font-size:15px;font-weight:600;cursor:pointer;margin-top:13px}
+.btns{background:#f5f5f5;color:#444;border:1px solid #ccc;border-radius:8px;padding:7px 13px;font-size:13px;cursor:pointer;margin-top:5px}
+.aw{background:#fff;border:1px solid #ddd;border-radius:10px;overflow:hidden}
+.ar{display:flex;border-bottom:1px solid #ddd;flex-wrap:wrap;background:#fdf8f5}
+.ab{padding:9px 13px;font-size:13px;cursor:pointer;background:none;border:none;color:#888;border-right:1px solid #ddd;white-space:nowrap}
+.ab.active{background:rgba(122,59,15,0.08);color:#7A3B0F;font-weight:600}
+.am{padding:16px}
+.sg{display:grid;grid-template-columns:repeat(2,1fr);gap:9px;margin-bottom:15px}
+.stc{background:#fdf8f5;border-radius:8px;padding:12px}
+.stc .n{font-size:22px;font-weight:700;color:#7A3B0F}.stc .l{font-size:12px;color:#888}
+.tw{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:13px;table-layout:fixed}
+th{text-align:left;padding:7px 9px;background:#fdf8f5;color:#888;font-weight:600;border-bottom:1px solid #ddd}
+td{padding:8px 9px;border-bottom:1px solid #eee;color:#333;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+tr:last-child td{border-bottom:none}
+tr.crow td{background:rgba(122,59,15,0.03)}
+input[type=checkbox]{accent-color:#7A3B0F;cursor:pointer}
+.pc{display:flex;align-items:center;gap:8px;margin-bottom:12px;flex-wrap:wrap}
+.pc label{font-size:12px;color:#777}
+.pc select{padding:6px 9px;border:1px solid #ccc;border-radius:8px;font-size:13px}
+.rl{font-size:13px;font-weight:600;color:#777;margin-bottom:9px}
+.rb{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:7px;margin-bottom:9px}
+.cfbtn{background:#7A3B0F;color:#fff;border:none;border-radius:6px;padding:5px 10px;font-size:12px;cursor:pointer;white-space:nowrap}
+.ssb{background:#7A3B0F;color:#fff;border:none;border-radius:8px;padding:6px 13px;font-size:13px;cursor:pointer;display:none}
+.ssb.show{display:inline-block}
+.nccard{background:#f9f9f9;border-radius:8px;padding:13px;margin-bottom:9px;border:1px solid #ddd}
+.nccard h4{font-size:14px;font-weight:600;color:#333;margin-bottom:4px}
+.nccard p{font-size:12px;color:#777;line-height:1.6}
+.nccard .sb{background:#7A3B0F;color:#fff;border:none;border-radius:6px;padding:5px 12px;font-size:12px;cursor:pointer;margin-top:7px}
+.sbar{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:12px;padding:12px;background:#f9f9f9;border-radius:8px;border:1px solid #ddd}
+.sbar label{font-size:12px;color:#777;display:flex;flex-direction:column;gap:3px}
+.sbar input,.sbar select{padding:6px 8px;border:1px solid #ccc;border-radius:8px;font-size:13px}
+.clrbtn{background:none;border:1px solid #ccc;border-radius:8px;padding:6px 11px;font-size:13px;cursor:pointer;color:#777;align-self:flex-end}
+.eg{display:flex;flex-wrap:wrap;gap:4px;margin-top:4px}
+.ec{padding:4px 9px;border-radius:14px;font-size:12px;cursor:pointer;border:1px solid #ccc;background:#fff;color:#666;user-select:none;white-space:nowrap}
+.ec.on{background:#7A3B0F;color:#fff;border-color:#7A3B0F}
+.carrow{display:flex;align-items:center;gap:7px;font-size:12px;color:#777;padding:6px 10px;background:#f5f5f5;border-radius:6px;margin-bottom:7px;cursor:pointer}
+.overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.4);z-index:100;align-items:flex-start;justify-content:center;padding:30px 16px;overflow-y:auto}
+.overlay.show{display:flex}
+.mdlbox{background:#fff;border-radius:12px;border:1px solid #ddd;padding:22px;width:100%;max-width:500px;margin:auto}
+.mdlbox h3{font-size:15px;font-weight:600;color:#333;margin-bottom:4px}
+.msub{font-size:12px;color:#777;margin-bottom:12px}
+.bnote{background:#fdf6f0;border:1px solid #d4956a;border-radius:8px;padding:9px 11px;font-size:12px;color:#7A3B0F;margin-bottom:11px;line-height:1.6}
+.mr{margin-bottom:11px}
+.mr label{font-size:12px;color:#777;display:block;margin-bottom:3px}
+.mr input,.mr select,.mr textarea{width:100%;padding:7px 9px;border:1px solid #ccc;border-radius:8px;font-size:13px;color:#333}
+.mr textarea{min-height:160px;line-height:1.75;resize:vertical}
+.wbox{background:#f9f9f9;border-radius:8px;padding:9px 11px;margin-bottom:11px;font-size:12px;line-height:1.8;color:#777}
+.wbox strong{color:#333;font-weight:600}
+.tolist{background:#f9f9f9;border-radius:8px;padding:9px 11px;font-size:12px;color:#777;margin-bottom:11px;line-height:1.8}
+.tolist strong{color:#333;font-weight:600}
+.mandate{display:none;margin-top:7px}.mandate.show{display:flex;gap:8px}
+.hint{font-size:11px;color:#aaa;margin-top:3px}
+.mbtns{display:flex;gap:7px;margin-top:12px}
+.mbtns button{flex:1;padding:10px;border-radius:8px;font-size:13px;cursor:pointer;font-weight:600}
+.mbcancel{background:#f5f5f5;border:1px solid #ccc;color:#444}
+.mbsend{background:#7A3B0F;color:#fff;border:none}
+.complete-box{background:#fff;border-radius:12px;padding:36px 24px;text-align:center;border:1px solid #ddd}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div style="background:#fff;border-radius:10px;overflow:hidden;border:1px solid #ddd">
+<div class="tabs">
+  <button class="tab active" onclick="sv('form')">申込フォーム</button>
+  <button class="tab" onclick="sv('complete')">申込完了</button>
+  <button class="tab" onclick="sv('admin')">管理画面</button>
+</div>
+
+<!-- フォーム -->
+<div class="view active" id="view-form">
+  <div class="sh"><span style="font-size:18px">⛩</span><h2>ご祈祷・祭典お申込みフォーム</h2><span class="sub">スマホ・PCどちらからでも</span></div>
+  <div class="fw">
+    <div class="fs">
+      <h3>ご祈祷・祭典の種類（複数選択可）</h3>
+      <div class="grplabel">神社でのご祈祷</div>
+      <div class="chips">
+        <div class="chip" onclick="tc(this)">初宮詣り（お宮参り）</div>
+        <div class="chip" onclick="tc(this)">七五三詣</div>
+        <div class="chip on" onclick="tc(this)">厄除（厄年の方）</div>
+        <div class="chip" onclick="tc(this)">災厄除（厄年以外の方）</div>
+        <div class="chip" onclick="tc(this)">安産祈願（腹帯のお祓い）</div>
+        <div class="chip" onclick="tc(this)">交通安全（車祓い）</div>
+        <div class="chip" onclick="tc(this)">家内安全（社内安全）</div>
+        <div class="chip" onclick="tc(this)">商売繁盛祈願</div>
+        <div class="chip" onclick="tc(this)">建築安全祈願祭</div>
+        <div class="chip" data-oth="jinja" onclick="tc(this)">その他ご祈祷</div>
+      </div>
+      <div class="otnote" id="oth-jinja"><label>「その他ご祈祷」の内容をご記入ください</label><textarea placeholder="例：合格祈願、病気平癒、縁結び など"></textarea></div>
+      <div class="kdivider"></div>
+      <div class="grplabel">出張祭典</div>
+      <div class="chips">
+        <div class="chip" data-sc onclick="tc(this)">地鎮祭</div>
+        <div class="chip" data-sc onclick="tc(this)">入居清祓い</div>
+        <div class="chip" data-sc onclick="tc(this)">竣工式</div>
+        <div class="chip" data-sc onclick="tc(this)">上棟祭</div>
+        <div class="chip" data-sc onclick="tc(this)">井戸祓い</div>
+        <div class="chip" data-sc onclick="tc(this)">神棚返納</div>
+        <div class="chip" data-sc data-oth="shutcho" onclick="tc(this)">その他出張祭典</div>
+      </div>
+      <div class="otnote" id="oth-shutcho"><label>「その他出張祭典」の内容をご記入ください</label><textarea placeholder="例：開業式、神事 など"></textarea></div>
+      <div class="shutcho-extra" id="sc-extra">
+        <h4>神職・荷物のお迎えについて</h4>
+        <div class="radio-group">
+          <label class="radio-opt sel" id="opt-ok"><input type="radio" name="muk" value="ok" checked onchange="tr()"><span><div class="rlabel">車での送迎が可能</div><div class="rsub">神職と祭典用具のお迎えをお願いします。</div></span></label>
+          <label class="radio-opt" id="opt-ng"><input type="radio" name="muk" value="ng" onchange="tr()"><span><div class="rlabel">送迎不可（駐車場の提供をお願いします）</div><div class="rsub">神職が車で伺います。駐車スペースのご確保をお願いします</div></span></label>
+        </div>
+      </div>
+    </div>
+    <div class="fs">
+      <h3>ご希望の日時（最大3候補）</h3>
+      <div class="tb1"><div class="tblabel">第1希望</div><div class="fr"><div class="fg"><label>日付</label><input type="date" value="2025-11-15"></div><div class="fg"><label>時間</label><div class="tsel"><select class="hr"><option>10</option><option>11</option><option>12</option><option>13</option><option>14</option><option>15</option><option>16</option></select><span>時</span><select class="mn"><option>00</option><option>30</option></select><span>分</span></div></div></div></div>
+      <div class="tb2"><div class="tblabel">第2希望（任意）</div><div class="fr"><div class="fg"><label>日付</label><input type="date" value="2025-11-16"></div><div class="fg"><label>時間</label><div class="tsel"><select class="hr"><option>10</option><option>11</option><option>12</option><option selected>13</option><option>14</option><option>15</option><option>16</option></select><span>時</span><select class="mn"><option>00</option><option>30</option></select><span>分</span></div></div></div></div>
+      <div class="tb3"><div class="tblabel">第3希望（任意）</div><div class="fr"><div class="fg"><label>日付</label><input type="date"></div><div class="fg"><label>時間</label><div class="tsel"><select class="hr"><option>10</option><option>11</option><option>12</option><option>13</option><option>14</option><option>15</option><option>16</option></select><span>時</span><select class="mn"><option>00</option><option>30</option></select><span>分</span></div></div></div></div>
+    </div>
+    <div class="fs">
+      <h3>ご祈祷をお受けになる方</h3>
+      <div style="font-size:12px;color:#777;margin-bottom:8px">申込者ご本人以外がお受けになる場合はご家族の情報をご入力ください。</div>
+      <div class="fr" style="margin-bottom:7px"><div class="fg"><label>お受けになる方</label><select id="ukeru" onchange="tu(this)"><option value="s">申込者本人</option><option value="f">ご家族（下記に入力）</option></select></div></div>
+      <div id="ud" style="display:none">
+        <div class="fr"><div class="fg"><label>お名前（漢字）</label><input type="text" placeholder="例：山田 太郎"></div><div class="fg"><label>ふりがな</label><input type="text" placeholder="例：やまだ たろう"></div></div>
+        <div class="fr"><div class="fg"><label>生年月日</label><input type="date"></div><div class="fg"><label>続柄</label><select><option>ご主人</option><option>奥様</option><option>長男</option><option>長女</option><option>次男</option><option>次女</option><option>その他</option></select></div></div>
+      </div>
+    </div>
+    <div class="fs">
+      <h3>お申込者の情報</h3>
+      <div class="fr"><div class="fg"><label>お名前（漢字）</label><input type="text" value="山田　花子"></div><div class="fg"><label>ふりがな</label><input type="text" value="やまだ はなこ"></div></div>
+      <div class="fr"><div class="fg"><label>生年月日</label><input type="date" value="1986-04-03"></div><div class="fg"><label>性別</label><select><option>女性</option><option>男性</option></select></div></div>
+      <div class="fr"><div class="fg"><label>郵便番号</label><input type="text" value="660-0001"></div><div class="fg"><label>都道府県</label><select><option>兵庫県</option><option>大阪府</option><option>京都府</option><option>奈良県</option><option>その他</option></select></div></div>
+      <div class="fr"><div class="fg"><label>市区町村</label><input type="text" value="尼崎市"></div><div class="fg"><label>番地・建物名</label><input type="text" value="東本町1丁目2-3"></div></div>
+      <div class="fr"><div class="fg"><label>電話番号</label><input type="tel" value="090-0000-0000"></div><div class="fg"><label>メールアドレス</label><input type="email" value="hanako@example.com"></div></div>
+    </div>
+    <div class="fs">
+      <h3>ご家族の情報（任意）</h3>
+      <div style="font-size:12px;color:#777;margin-bottom:8px">ご家族を登録いただくと、厄年や七五三の時期にご案内をお送りできます。</div>
+      <div class="mbox"><div class="mn">山田 太郎（ご主人）<span class="bdg by">本厄 2025年</span></div><div class="mi">1982年生・42歳男性</div></div>
+      <div class="mbox"><div class="mn">山田 一郎（長男）<span class="bdg bs">七五三 2026年</span></div><div class="mi">2021年生・5歳</div></div>
+      <button class="btns">＋ ご家族を追加する</button>
+    </div>
+    <div class="fs">
+      <h3>神社からのご案内について</h3>
+      <div class="nbox">
+        <p>ご希望の方には、厄年・七五三・初詣などの時期に神社よりご案内をお送りいたします。ご不要の場合はチェック不要です。いつでも解除できます。</p>
+        <div class="nchks" onchange="un()">
+          <label class="nchk"><input type="checkbox" checked><span><div class="nct">厄年のご案内を希望する</div><div class="ncs">ご本人・ご家族の厄年前（前厄・本厄・後厄）にお知らせします</div></span></label>
+          <label class="nchk"><input type="checkbox" checked><span><div class="nct">七五三のご案内を希望する</div><div class="ncs">お子様の対象年齢の前年秋ごろにお知らせします</div></span></label>
+          <label class="nchk"><input type="checkbox" checked><span><div class="nct">季節の行事・お祭りのご案内を希望する</div><div class="ncs">初詣・節分・夏祭りなど</div></span></label>
+        </div>
+        <div class="nmeth show" id="nmeth"><label>ご案内の受け取り方法</label><select style="width:auto;padding:6px 10px;border:1px solid #ccc;border-radius:8px;font-size:13px"><option>メールで受け取る</option><option>LINEで受け取る</option><option>メール・LINEどちらも</option></select></div>
+      </div>
+    </div>
+    <button class="btnm" onclick="sv('complete')">申込内容を送信する →</button>
+  </div>
+</div>
+
+<!-- 完了 -->
+<div class="view" id="view-complete">
+  <div class="complete-box">
+    <div style="font-size:40px;margin-bottom:14px">⛩</div>
+    <h3 style="font-size:20px;font-weight:600;color:#333;margin-bottom:13px">お申込みを受け付けました</h3>
+    <p style="font-size:14px;color:#666;line-height:1.9;margin-bottom:18px">ご希望の日時を確認のうえ、<br>日程が確定しましたらご登録のメールアドレスへご連絡いたします。<br>しばらくお待ちください。</p>
+    <p style="font-size:12px;color:#aaa">お申込み内容の控えをメールにてお送りしました。</p>
+  </div>
+</div>
+
+<!-- 管理画面 -->
+<div class="view" id="view-admin">
+  <div class="aw">
+    <div class="ar">
+      <button class="ab active" onclick="sa('moshi',this)">申込一覧</button>
+      <button class="ab" onclick="sa('members',this)">登録者検索</button>
+      <button class="ab" onclick="sa('yaku',this)">厄年対象者</button>
+      <button class="ab" onclick="sa('shichi',this)">七五三対象者</button>
+      <button class="ab" onclick="sa('notify',this)">通知管理</button>
+    </div>
+    <div class="am">
+      <div id="ad-moshi">
+        <div class="pc"><label>表示期間：</label><select onchange="um(this)"><option>先月</option><option selected>今月</option><option>来月</option></select></div>
+        <div class="sg"><div class="stc"><div class="n" id="mc">5</div><div class="l" id="ml">今月の申込件数</div></div><div class="stc"><div class="n">247</div><div class="l">総登録者数</div></div></div>
+        <div class="rl">申込一覧　<span style="font-size:12px;font-weight:400">— 「日程を確定」で確定メールを送信できます</span></div>
+        <div class="tw"><table>
+          <thead><tr><th style="width:85px">申込者名</th><th style="width:88px">お受けになる方</th><th style="width:100px">祈祷・祭典</th><th style="width:145px">ご希望日時</th><th style="width:60px">状態</th><th style="width:72px">操作</th></tr></thead>
+          <tbody>
+            <tr><td>山田 花子</td><td>本人</td><td>厄除（厄年）</td><td style="white-space:normal;font-size:12px;line-height:1.7"><span style="color:#7A3B0F;font-weight:600">①11/15 10:00</span><br><span style="color:#888">②11/16 13:00</span></td><td><span class="bdg bpend">未確定</span></td><td><button class="cfbtn" onclick="ocf('山田 花子','厄除（厄年の方）',['①11月15日（土）10:00','②11月16日（日）13:00'],'hanako@example.com')">日程を確定</button></td></tr>
+            <tr><td>佐藤 建設</td><td>会社</td><td>地鎮祭<br><span style="font-size:11px;color:#7A3B0F">送迎可</span></td><td style="white-space:normal;font-size:12px"><span style="color:#7A3B0F;font-weight:600">①11/18 10:00</span></td><td><span class="bdg bconf">確定済</span></td><td style="color:#aaa;font-size:12px">送信済</td></tr>
+            <tr><td>田中 恵子</td><td>本人</td><td>安産祈願</td><td style="white-space:normal;font-size:12px;line-height:1.7"><span style="color:#7A3B0F;font-weight:600">①11/15 11:00</span><br><span style="color:#888">②11/20 10:00</span></td><td><span class="bdg bpend">未確定</span></td><td><button class="cfbtn" onclick="ocf('田中 恵子','安産祈願（腹帯のお祓い）',['①11月15日（土）11:00','②11月20日（木）10:00'],'keiko@example.com')">日程を確定</button></td></tr>
+            <tr><td>鈴木 工務店</td><td>会社</td><td>上棟祭<br><span style="font-size:11px;color:#888">駐車場提供</span></td><td style="white-space:normal;font-size:12px;line-height:1.7"><span style="color:#7A3B0F;font-weight:600">①11/22 10:00</span><br><span style="color:#888">②11/23 10:00</span></td><td><span class="bdg bpend">未確定</span></td><td><button class="cfbtn" onclick="ocf('鈴木 工務店','上棟祭',['①11月22日（土）10:00','②11月23日（日）10:00'],'suzuki@example.com')">日程を確定</button></td></tr>
+          </tbody>
+        </table></div>
+      </div>
+      <div id="ad-members" style="display:none">
+        <div class="sbar">
+          <label>氏名・ふりがな<input type="text" id="sn" placeholder="山田、やまだ など" style="width:115px" oninput="ds()"></label>
+          <label>生まれ年<select id="sy" style="width:148px" onchange="ds()"><option value="">指定なし</option></select></label>
+          <label>住所（自由検索）<input type="text" id="sa" placeholder="兵庫県、尼崎市、東本町1丁目 など" style="width:200px" oninput="ds()"></label>
+          <label style="flex-basis:100%">干支で絞り込む（複数選択可）<div class="eg" id="eg"></div></label>
+          <button class="clrbtn" onclick="cs()">クリア</button>
+        </div>
+        <div class="rb">
+          <div class="rl" id="mrl">登録者 247名</div>
+          <button class="ssb" id="ssb" onclick="oi()">チェックした方にメールを送信</button>
+        </div>
+        <div class="carrow" onclick="ta()"><input type="checkbox" id="ca" style="width:14px;height:14px"> 表示中の全員を選択</div>
+        <div class="tw"><table>
+          <thead><tr><th style="width:32px"></th><th style="width:118px">お名前</th><th style="width:98px">生まれ年・干支</th><th style="width:185px">ご住所</th><th style="width:60px">連絡先</th></tr></thead>
+          <tbody id="mb"></tbody>
+        </table></div>
+      </div>
+      <div id="ad-yaku" style="display:none">
+        <div class="pc"><label>対象年：</label><select onchange="uy(this)"><option>2024年（昨年）</option><option selected>2025年（今年）</option><option>2026年（来年）</option></select></div>
+        <div class="sg" style="grid-template-columns:repeat(3,1fr)"><div class="stc"><div class="n" id="ym">14</div><div class="l">前厄</div></div><div class="stc"><div class="n" id="yh">11</div><div class="l">本厄</div></div><div class="stc"><div class="n" id="ya">9</div><div class="l">後厄</div></div></div>
+        <div class="rl" id="yl">2025年（今年）の厄年対象者 34名</div>
+        <div class="tw"><table><thead><tr><th style="width:120px">お名前</th><th style="width:80px">厄の種別</th><th style="width:90px">年齢・性別</th><th>連絡先</th></tr></thead><tbody><tr><td>山田 花子</td><td><span class="bdg by" style="margin:0">前厄</span></td><td>39歳・女</td><td>メール</td></tr><tr><td>山田 太郎</td><td><span class="bdg by" style="margin:0">本厄</span></td><td>42歳・男</td><td>メール</td></tr><tr><td>伊藤 誠</td><td><span class="bdg by" style="margin:0">後厄</span></td><td>26歳・男</td><td>LINE</td></tr><tr><td>中村 由美</td><td><span class="bdg by" style="margin:0">本厄</span></td><td>37歳・女</td><td>LINE</td></tr></tbody></table></div>
+      </div>
+      <div id="ad-shichi" style="display:none">
+        <div class="pc"><label>対象年：</label><select onchange="us(this)"><option>2024年（昨年）</option><option selected>2025年（今年）</option><option>2026年（来年）</option></select></div>
+        <div class="sg" style="grid-template-columns:repeat(3,1fr)"><div class="stc"><div class="n" id="s3">7</div><div class="l">3歳</div></div><div class="stc"><div class="n" id="s5">4</div><div class="l">5歳</div></div><div class="stc"><div class="n" id="s7">1</div><div class="l">7歳</div></div></div>
+        <div class="rl" id="sl">2025年（今年）の七五三対象者 12名</div>
+        <div class="tw"><table><thead><tr><th style="width:110px">お子様のお名前</th><th style="width:55px">年齢</th><th style="width:110px">保護者名</th><th>連絡先</th></tr></thead><tbody><tr><td>佐藤 花</td><td>3歳</td><td>佐藤 健太</td><td>LINE</td></tr><tr><td>山田 一郎</td><td>5歳</td><td>山田 花子</td><td>メール</td></tr><tr><td>鈴木 葵</td><td>7歳</td><td>鈴木 美咲</td><td>LINE</td></tr></tbody></table></div>
+      </div>
+      <div id="ad-notify" style="display:none">
+        <div class="nccard"><h4>来月送信予定：厄年のご案内</h4><p>対象者 34名（前厄14名・本厄11名・後厄9名）<br>送信予定：12月1日　BCC送信</p><button class="sb">内容を確認して送信</button></div>
+        <div class="nccard"><h4>七五三のご案内（11月）</h4><p>対象者 12名（3歳7名・5歳4名・7歳1名）<br>送信予定：10月15日　BCC送信</p><button class="sb">内容を確認して送信</button></div>
+        <div class="nccard"><h4>初詣のご案内（年始）</h4><p>全登録者 247名対象<br>送信予定：12月25日　BCC送信</p><button class="sb">内容を確認して送信</button></div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+
+<!-- 日程確定モーダル -->
+<div class="overlay" id="ov-cf">
+  <div class="mdlbox">
+    <h3 id="cft"></h3><div class="msub">送信先：<span id="cfe"></span></div>
+    <div class="wbox" id="cfw"></div>
+    <div class="mr"><label>日程の選択</label><select id="cfd" onchange="ods()"></select></div>
+    <div class="mandate" id="md"><div class="fg" style="flex:1"><label style="font-size:12px;color:#777">代替日程（手入力）</label><input type="text" id="mdv" placeholder="例：11月28日（金）10:30" oninput="ubng()"></div></div>
+    <div class="hint" id="cfh"></div>
+    <div class="mr" style="margin-top:10px"><label>送信メール（確認・編集できます）</label><textarea id="cfb"></textarea></div>
+    <div class="mbtns"><button class="mbcancel" onclick="cm()">キャンセル</button><button class="mbsend" onclick="scf()">メールを送信する</button></div>
+  </div>
+</div>
+
+<!-- イレギュラーモーダル -->
+<div class="overlay" id="ov-ir">
+  <div class="mdlbox">
+    <h3>イレギュラーメールの送信</h3><div class="msub">チェックした方へ個別にメールをお送りします。</div>
+    <div class="bnote">各宛先には個別に送信されます（BCC送信）。<br>受け取った方には他の受信者のアドレスは表示されません。</div>
+    <div class="tolist" id="tl"></div>
+    <div class="mr"><label>件名</label><input type="text" id="isub" value="○○神社よりご連絡"></div>
+    <div class="mr"><label>本文（送信時に冒頭へ「○○様」が自動で追加されます）</label><textarea id="ibody" placeholder="本文を入力してください。"></textarea></div>
+    <div style="font-size:12px;color:#777;padding:8px 11px;background:#f9f9f9;border-radius:8px;line-height:1.7">送信イメージ：<span style="color:#333">山田 花子 様　（本文）　○○神社</span></div>
+    <div class="mbtns"><button class="mbcancel" onclick="cm()">キャンセル</button><button class="mbsend" onclick="sir()">BCC送信する</button></div>
+  </div>
+</div>
+
+<script>
+const ETO=['子','丑','寅','卯','辰','巳','午','未','申','酉','戌','亥'];
+const ETR=['ね','うし','とら','う','たつ','み','うま','ひつじ','さる','とり','いぬ','い'];
+function ge(y){return ETO[((y-2020)%12+12)%12];}
+const MEM=[
+  {name:'山田 花子',yomi:'やまだ はなこ',year:1986,addr:'兵庫県尼崎市東本町1丁目2-3',c:'メール'},
+  {name:'山田 太郎',yomi:'やまだ たろう',year:1982,addr:'兵庫県尼崎市東本町1丁目2-3',c:'メール'},
+  {name:'佐藤 健太',yomi:'さとう けんた',year:1985,addr:'兵庫県尼崎市武庫之荘3丁目14-5',c:'LINE'},
+  {name:'田中 恵子',yomi:'たなか けいこ',year:1993,addr:'大阪府大阪市福島区2丁目8-12',c:'メール'},
+  {name:'鈴木 美咲',yomi:'すずき みさき',year:1990,addr:'兵庫県尼崎市塚口町4丁目3-1',c:'LINE'},
+  {name:'伊藤 誠',yomi:'いとう まこと',year:1999,addr:'兵庫県尼崎市東本町3丁目7-2',c:'LINE'},
+  {name:'中村 由美',yomi:'なかむら ゆみ',year:1988,addr:'兵庫県西宮市長洲本通1丁目5-8',c:'LINE'},
+  {name:'小林 正男',yomi:'こばやし まさお',year:1975,addr:'兵庫県尼崎市武庫之荘1丁目22-4',c:'メール'},
+  {name:'加藤 幸子',yomi:'かとう さちこ',year:1980,addr:'兵庫県尼崎市南武庫之荘5丁目1-9',c:'メール'},
+  {name:'渡辺 隆',yomi:'わたなべ たかし',year:1970,addr:'大阪府豊中市本町2丁目18-6',c:'LINE'},
+];
+var fil=MEM.slice(),chk=new Set(),se=new Set();
+var _n='',_k='',_w=[];
+
+function tc(el){
+  el.classList.toggle('on');
+  const o=el.dataset.oth;if(o)document.getElementById('oth-'+o).classList.toggle('show',el.classList.contains('on'));
+  const any=[...document.querySelectorAll('[data-sc].on')].length>0;
+  document.getElementById('sc-extra').classList.toggle('show',any);
+}
+function tr(){document.getElementById('opt-ok').classList.toggle('sel',document.querySelector('[name=muk][value=ok]').checked);document.getElementById('opt-ng').classList.toggle('sel',document.querySelector('[name=muk][value=ng]').checked);}
+function tu(s){document.getElementById('ud').style.display=s.value==='f'?'block':'none';}
+function un(){const a=[...document.querySelectorAll('.nchks input')].some(c=>c.checked);document.getElementById('nmeth').classList.toggle('show',a);}
+function sv(id){document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));document.getElementById('view-'+id).classList.add('active');document.querySelectorAll('.tab').forEach((t,i)=>{t.classList.remove('active');if((i===0&&id==='form')||(i===1&&id==='complete')||(i===2&&id==='admin'))t.classList.add('active');});}
+function sa(id,btn){['moshi','members','yaku','shichi','notify'].forEach(n=>{const el=document.getElementById('ad-'+n);if(el)el.style.display=n===id?'block':'none';});document.querySelectorAll('.ab').forEach(b=>b.classList.remove('active'));btn.classList.add('active');if(id==='members')rm();}
+function um(s){const m={先月:[12,'先月'],今月:[5,'今月'],来月:[3,'来月']}[s.value];document.getElementById('mc').textContent=m[0];document.getElementById('ml').textContent=m[1]+'の申込件数';}
+function uy(s){const m={'2024年（昨年）':[11,9,8,'2024年（昨年）の厄年対象者 28名'],'2025年（今年）':[14,11,9,'2025年（今年）の厄年対象者 34名'],'2026年（来年）':[13,14,11,'2026年（来年）の厄年対象者 38名']}[s.value];document.getElementById('ym').textContent=m[0];document.getElementById('yh').textContent=m[1];document.getElementById('ya').textContent=m[2];document.getElementById('yl').textContent=m[3];}
+function us(s){const m={'2024年（昨年）':[5,3,2,'2024年（昨年）の七五三対象者 10名'],'2025年（今年）':[7,4,1,'2025年（今年）の七五三対象者 12名'],'2026年（来年）':[6,7,4,'2026年（来年）の七五三対象者 17名']}[s.value];document.getElementById('s3').textContent=m[0];document.getElementById('s5').textContent=m[1];document.getElementById('s7').textContent=m[2];document.getElementById('sl').textContent=m[3];}
+function iys(){const sel=document.getElementById('sy');const cur=new Date().getFullYear();for(let y=cur;y>=cur-90;y--){const o=document.createElement('option');o.value=y;o.textContent=y+'年（'+ge(y)+'・'+(cur-y)+'歳）';sel.appendChild(o);}}
+function ds(){const n=document.getElementById('sn').value.trim().toLowerCase();const y=document.getElementById('sy').value;const a=document.getElementById('sa').value.trim();fil=MEM.filter(m=>{if(n&&!m.name.includes(n)&&!m.yomi.includes(n))return false;if(y&&m.year!==parseInt(y))return false;if(a&&!m.addr.includes(a))return false;if(se.size>0&&!se.has(ge(m.year)))return false;return true;});rm();}
+function cs(){document.getElementById('sn').value='';document.getElementById('sy').value='';document.getElementById('sa').value='';se.clear();document.querySelectorAll('.ec').forEach(c=>c.classList.remove('on'));fil=MEM.slice();rm();}
+function rm(){const tb=document.getElementById('mb');tb.innerHTML=fil.map(m=>{const ic=chk.has(m.name);return`<tr class="${ic?'crow':''}"><td style="text-align:center"><input type="checkbox" style="width:14px;height:14px" ${ic?'checked':''} onchange="tk('${m.name}',this)"></td><td>${m.name}<br><span style="font-size:11px;color:#888">${m.yomi}</span></td><td>${m.year}年<br><span style="font-size:12px;color:#7A3B0F;font-weight:600">${ge(m.year)}年</span></td><td style="white-space:normal;font-size:12px">${m.addr}</td><td>${m.c}</td></tr>`;}).join('');document.getElementById('mrl').textContent=`検索結果：${fil.length}名`;uss();document.getElementById('ca').checked=fil.length>0&&fil.every(m=>chk.has(m.name));}
+function tk(name,el){if(el.checked)chk.add(name);else chk.delete(name);el.closest('tr').classList.toggle('crow',el.checked);uss();document.getElementById('ca').checked=fil.length>0&&fil.every(m=>chk.has(m.name));}
+function ta(){const ca=document.getElementById('ca');ca.checked=!ca.checked;fil.forEach(m=>{if(ca.checked)chk.add(m.name);else chk.delete(m.name);});rm();}
+function uss(){const b=document.getElementById('ssb');const n=chk.size;if(n>0){b.classList.add('show');b.textContent=`チェックした ${n}名 にメールを送信`;}else b.classList.remove('show');}
+function ocf(name,kito,wishes,email){_n=name;_k=kito;_w=wishes;document.getElementById('cft').textContent=name+' 様　日程確定';document.getElementById('cfe').textContent=email;document.getElementById('cfw').innerHTML='<strong>ご希望日時：</strong><br>'+wishes.map((w,i)=>`<span style="color:${i===0?'#7A3B0F':'#888'}">${w}</span>`).join('<br>');const sel=document.getElementById('cfd');sel.innerHTML=wishes.map(w=>`<option value="${w}">${w}　で確定する</option>`).join('')+'<option value="ng">どのご希望も都合がつかない</option>';sel.value=wishes[0];ods();document.getElementById('ov-cf').classList.add('show');}
+function ods(){const v=document.getElementById('cfd').value;const md=document.getElementById('md');const ht=document.getElementById('cfh');if(v==='ng'){md.classList.add('show');ht.textContent='代替日程を手入力してください。送信後、個別にやり取りを続けてください。';ubng();}else{md.classList.remove('show');ht.textContent='';ubc(v);}}
+function ubng(){const alt=document.getElementById('mdv').value;const al=alt?`\n■ ご提案の日程：${alt}〜\n\nご都合はいかがでしょうか。`:'';document.getElementById('cfb').value=`${_n} 様\n\nこの度はお申込みをいただき、誠にありがとうございます。\n\n誠に申し訳ございませんが、ご希望いただきました日程はいずれもご対応が難しい状況でございます。${al}\n\nご不便をおかけして大変恐れ入りますが、ご都合をお聞かせいただけますと幸いです。\n\n○○神社`;}
+function ubc(date){document.getElementById('cfb').value=`${_n} 様\n\nこの度はお申込みをいただき、誠にありがとうございます。\n\n日程が確定しましたので、ご連絡申し上げます。\n\n■ 内容：${_k}\n■ 日時：${date}〜\n\n当日はどうぞよろしくお願いいたします。\n\n○○神社`;}
+function oi(){const names=[...chk];document.getElementById('tl').innerHTML=`<strong>送信先（${names.length}名・BCC送信）：</strong><br>`+names.join('、');document.getElementById('ibody').value='';document.getElementById('isub').value='○○神社よりご連絡';document.getElementById('ov-ir').classList.add('show');}
+function cm(){document.getElementById('ov-cf').classList.remove('show');document.getElementById('ov-ir').classList.remove('show');}
+function scf(){alert('確定メールを送信しました。');cm();}
+function sir(){alert(`${chk.size}名にBCC送信しました。`);chk.clear();cm();rm();}
+
+iys();
+const egEl=document.getElementById('eg');
+ETO.forEach((e,i)=>{const c=document.createElement('div');c.className='ec';c.textContent=e+'（'+ETR[i]+'）';c.dataset.e=e;c.onclick=()=>{c.classList.toggle('on');if(c.classList.contains('on'))se.add(e);else se.delete(e);ds();};egEl.appendChild(c);});
+</script>
+</body>
+</html>
