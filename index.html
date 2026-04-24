@@ -146,7 +146,7 @@ body{background:#f5f0eb;color:#2c2c2a;min-height:100vh}
         <p>ご希望の方には、厄年・七五三・初詣などの時期に神社よりご案内をお送りいたします。ご不要の場合はチェック不要です。いつでも解除できます。</p>
         <div class="nchks" onchange="un()">
           <label class="nchk"><input type="checkbox"><span><div class="nct">厄年のご案内を希望する</div><div class="ncs">ご本人・ご家族の厄年前（前厄・本厄・後厄）にお知らせします</div></span></label>
-          <label class="nchk"><input type="checkbox"><span><div class="nct">七五三のご案内を希望する</div><div class="ncs">お子様の対象年齢の前年秋ごろにお知らせします</div></span></label>
+          <label class="nchk"><input type="checkbox"><span><div class="nct">七五三のご案内を希望する</div><div class="ncs">お子様の対象年齢の前年にお知らせします。</div></span></label>
           <label class="nchk"><input type="checkbox"><span><div class="nct">季節の行事・お祭りのご案内を希望する</div><div class="ncs">初詣・節分・夏祭りなど</div></span></label>
         </div>
         <div class="nmeth" id="nmeth">
@@ -161,6 +161,13 @@ body{background:#f5f0eb;color:#2c2c2a;min-height:100vh}
             <input type="text" placeholder="例：@taro_yamada">
           </div>
         </div>
+      </div>
+    </div>
+    <div class="fs">
+      <h3>備考</h3>
+      <div class="fg">
+        <label>上記以外でお伝えしたいこと、ご質問があればご記入ください（任意）</label>
+        <textarea placeholder="" style="min-height:90px"></textarea>
       </div>
     </div>
     <button class="btnm" onclick="submitForm()">申込内容を送信する →</button>
