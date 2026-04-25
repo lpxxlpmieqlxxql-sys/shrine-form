@@ -223,10 +223,97 @@ function addFamily(){
   document.getElementById('family-list').appendChild(div);
 }
 function removeFamily(id){document.getElementById(id).remove();}
+function getFormData(){
+  // 祈祷内容
+  var kito=[...document.querySelectorAll('.chip.on')].map(c=>c.textContent.trim()).join('、');
+  // その他内容
+  var otJinja=document.querySelector('#oth-jinja textarea');
+  var otShutcho=document.querySelector('#oth-shutcho textarea');
+  if(otJinja&&otJinja.value)kito+='（その他：'+otJinja.value+'）';
+  if(otShutcho&&otShutcho.value)kito+='（出張その他：'+otShutcho.value+'）';
+  // 希望日時
+  function getTime(hrSel,mnSel){var h=hrSel?hrSel.value:'';var m=mnSel?mnSel.value:'';return h?h+'時'+m+'分':'';}
+  var tSels=document.querySelectorAll('.tsel');
+  var d1=document.getElementById('d1').value+' '+getTime(tSels[0]&&tSels[0].querySelector('.hr'),tSels[0]&&tSels[0].querySelector('.mn'));
+  var d2=document.getElementById('d2').value+' '+getTime(tSels[1]&&tSels[1].querySelector('.hr'),tSels[1]&&tSels[1].querySelector('.mn'));
+  var d3=document.getElementById('d3').value+' '+getTime(tSels[2]&&tSels[2].querySelector('.hr'),tSels[2]&&tSels[2].querySelector('.mn'));
+  // お受けになる方
+  var ukeruSel=document.getElementById('ukeru');
+  var ukeru=ukeruSel.value==='s'?'申込者本人':'ご家族';
+  if(ukeruSel.value==='f'){
+    var udInputs=document.querySelectorAll('#ud input,#ud select');
+    var uname=udInputs[0]?udInputs[0].value:'';
+    var urel=udInputs[3]?udInputs[3].value:'';
+    ukeru=uname+'（'+urel+'）';
+  }
+  // 申込者情報
+  var inputs=document.querySelectorAll('.fs input[type=text],.fs input[type=tel],.fs input[type=email],.fs input[type=date],.fs select');
+  var flds={};
+  document.querySelectorAll('.fs').forEach(function(fs){
+    var h=fs.querySelector('h3');
+    if(!h||h.textContent.indexOf('お申込者')===−1)return;
+    var ins=fs.querySelectorAll('input,select');
+    flds.name=ins[0]?ins[0].value:'';
+    flds.yomi=ins[1]?ins[1].value:'';
+    flds.birthday=ins[2]?ins[2].value:'';
+    flds.gender=ins[3]?ins[3].value:'';
+    flds.zip=ins[4]?ins[4].value:'';
+    flds.pref=ins[5]?ins[5].value:'';
+    flds.city=ins[6]?ins[6].value:'';
+    flds.address=ins[7]?ins[7].value:'';
+    flds.tel=ins[8]?ins[8].value:'';
+    flds.email=ins[9]?ins[9].value:'';
+  });
+  // 送迎
+  var muk=document.querySelector('[name=muk]:checked');
+  var mukVal=muk?muk.value:'';
+  // 案内希望
+  var noticeChks=[...document.querySelectorAll('.nchks input:checked')].map(c=>{var l=c.closest('label');return l?l.querySelector('.nct').textContent:'';}).join('、');
+  var noticeMethod=document.getElementById('notice-method')?document.getElementById('notice-method').value:'';
+  var lineId=document.querySelector('#line-id input')?document.querySelector('#line-id input').value:'';
+  // 家族情報
+  var families=[];
+  document.querySelectorAll('.fbox').forEach(function(fb){
+    var ins=fb.querySelectorAll('input,select');
+    var fn=ins[0]?ins[0].value:'';
+    var fy=ins[2]?ins[2].value:'';
+    var fr=ins[3]?ins[3].value:'';
+    if(fn)families.push(fn+'（'+fr+'）生年月日:'+fy);
+  });
+  // 備考
+  var bikoTA=document.querySelector('.fs:last-of-type textarea');
+  var biko=bikoTA?bikoTA.value:'';
+  return{
+    kito:kito,d1:d1.trim(),d2:d2.trim(),d3:d3.trim(),
+    ukeru:ukeru,mukaeri:mukVal,
+    name:flds.name||'',yomi:flds.yomi||'',birthday:flds.birthday||'',gender:flds.gender||'',
+    zip:flds.zip||'',pref:flds.pref||'',city:flds.city||'',address:flds.address||'',
+    tel:flds.tel||'',email:flds.email||'',
+    notice:noticeChks,noticeMethod:noticeMethod,lineId:lineId,
+    family:families.join(' / '),biko:biko
+  };
+}
+
 function submitForm(){
-  document.getElementById('form-view').style.display='none';
-  document.getElementById('complete-view').style.display='block';
-  window.scrollTo(0,0);
+  var btn=document.querySelector('.btnm');
+  btn.textContent='送信中...';
+  btn.disabled=true;
+  var data=getFormData();
+  var GAS_URL='https://script.google.com/macros/s/AKfycbyOgWwprEk874-7kfp9r3_Cz_RnwhOjDQYs_5Q70zLozuDDa4rRo51C9V15Ac-yBLAY/exec';
+  fetch(GAS_URL,{
+    method:'POST',
+    mode:'no-cors',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify(data)
+  }).then(function(){
+    document.getElementById('form-view').style.display='none';
+    document.getElementById('complete-view').style.display='block';
+    window.scrollTo(0,0);
+  }).catch(function(){
+    document.getElementById('form-view').style.display='none';
+    document.getElementById('complete-view').style.display='block';
+    window.scrollTo(0,0);
+  });
 }
 </script>
 </body>
