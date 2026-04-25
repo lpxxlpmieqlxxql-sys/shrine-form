@@ -9,7 +9,8 @@
 body{background:#f5f0eb;color:#2c2c2a;min-height:100vh}
 .wrap{max-width:700px;margin:0 auto;padding:12px}
 .sh{background:#7A3B0F;color:#fff;padding:13px 20px;border-radius:10px 10px 0 0;display:flex;align-items:center;gap:10px}
-.sh h2{font-size:15px;font-weight:600}.sh .sub{font-size:11px;opacity:.75;margin-left:auto}
+.sh h2{font-size:15px;font-weight:600}
+.sh .sub{font-size:11px;opacity:.75;margin-left:auto}
 .fw{background:#fff;padding:16px;border-radius:0 0 10px 10px;border:1px solid #ddd}
 .fs{margin-bottom:18px}
 .fs h3{font-size:13px;font-weight:600;color:#7A3B0F;margin-bottom:9px;padding-bottom:5px;border-bottom:1px solid #eeebe6}
@@ -25,7 +26,8 @@ body{background:#f5f0eb;color:#2c2c2a;min-height:100vh}
 .chip{padding:7px 13px;border-radius:20px;font-size:13px;cursor:pointer;border:1px solid #ccc;background:#f5f5f5;color:#555;user-select:none}
 .chip.on{background:#7A3B0F;color:#fff;border-color:#7A3B0F}
 .kdivider{height:1px;background:#eeebe6;margin:12px 0}
-.otnote{display:none;margin-top:7px}.otnote.show{display:block}
+.otnote{display:none;margin-top:7px}
+.otnote.show{display:block}
 .otnote label{font-size:12px;color:#777;display:block;margin-bottom:3px}
 .otnote textarea{width:100%;padding:7px 9px;border:1px solid #ccc;border-radius:8px;font-size:13px;resize:vertical;min-height:56px;line-height:1.5}
 .sc-extra{display:none;margin-top:12px;background:#fdf6f0;border:1px solid #d4956a;border-radius:10px;padding:14px}
@@ -43,11 +45,12 @@ body{background:#f5f0eb;color:#2c2c2a;min-height:100vh}
 .tb2 .tblabel,.tb3 .tblabel{color:#888}
 .tsel{display:flex;align-items:center;gap:5px;flex-wrap:wrap}
 .tsel select{padding:7px 5px;border:1px solid #ccc;border-radius:7px;font-size:14px}
-.tsel .hr{width:68px}.tsel .mn{width:62px}
+.tsel .hr{width:68px}
+.tsel .mn{width:62px}
 .tsel span{font-size:14px;color:#777}
 .family-list{display:flex;flex-direction:column;gap:8px;margin-bottom:8px}
 .fbox{background:#f9f9f9;border-radius:8px;padding:12px;border:1px solid #ddd;position:relative}
-.fbox .del{position:absolute;top:8px;right:8px;background:none;border:none;color:#aaa;font-size:16px;cursor:pointer;line-height:1}
+.fbox .del{position:absolute;top:8px;right:8px;background:none;border:none;color:#aaa;font-size:18px;cursor:pointer;line-height:1;padding:2px 6px}
 .fbox .del:hover{color:#c00}
 .nbox{background:#f9f9f9;border:1px solid #ddd;border-radius:10px;padding:14px}
 .nbox p{font-size:13px;color:#666;line-height:1.7;margin-bottom:11px}
@@ -56,11 +59,14 @@ body{background:#f5f0eb;color:#2c2c2a;min-height:100vh}
 .nchk input{width:15px;height:15px;margin-top:2px;flex-shrink:0;accent-color:#7A3B0F}
 .nct{font-size:13px;color:#333;line-height:1.5}
 .ncs{font-size:12px;color:#777}
-.nmeth{margin-top:11px;padding-top:10px;border-top:1px solid #eee;display:none}.nmeth.show{display:block}
+.nmeth{margin-top:11px;padding-top:10px;border-top:1px solid #eee;display:none}
+.nmeth.show{display:block}
 .nmeth label{font-size:12px;color:#777;display:block;margin-bottom:5px}
-.line-id{margin-top:8px;display:none}.line-id.show{display:block}
+.line-id{margin-top:8px;display:none}
+.line-id.show{display:block}
 .line-id label{font-size:12px;color:#777;display:block;margin-bottom:3px}
 .btnm{width:100%;background:#7A3B0F;color:#fff;border:none;border-radius:8px;padding:13px;font-size:15px;font-weight:600;cursor:pointer;margin-top:13px}
+.btnm:disabled{background:#aaa;cursor:not-allowed}
 .btns{background:#f5f5f5;color:#444;border:1px solid #ccc;border-radius:8px;padding:8px 14px;font-size:13px;cursor:pointer;margin-top:6px;display:inline-block}
 .complete-box{background:#fff;border-radius:10px;padding:36px 24px;text-align:center;border:1px solid #ddd}
 </style>
@@ -68,109 +74,197 @@ body{background:#f5f0eb;color:#2c2c2a;min-height:100vh}
 <body>
 <div class="wrap">
 <div style="background:#fff;border-radius:10px;overflow:hidden;border:1px solid #ddd">
-  <div class="sh"><span style="font-size:18px">⛩</span><h2>ご祈祷・祭典お申込みフォーム</h2><span class="sub">スマホ・PCどちらからでも</span></div>
+  <div class="sh">
+    <span style="font-size:18px">⛩</span>
+    <h2>ご祈祷・祭典お申込みフォーム</h2>
+    <span class="sub">スマホ・PCどちらからでも</span>
+  </div>
+
   <div class="fw" id="form-view">
+
+    <!-- 祈祷種類 -->
     <div class="fs">
       <h3>ご祈祷・祭典の種類（複数選択可）</h3>
       <div class="grplabel">神社でのご祈祷</div>
       <div class="chips">
-        <div class="chip" onclick="tc(this)">初宮詣り（お宮参り）</div>
-        <div class="chip" onclick="tc(this)">七五三詣</div>
-        <div class="chip" onclick="tc(this)">厄除（厄年の方）</div>
-        <div class="chip" onclick="tc(this)">災厄除（厄年以外の方）</div>
-        <div class="chip" onclick="tc(this)">安産祈願（腹帯のお祓い）</div>
-        <div class="chip" onclick="tc(this)">交通安全（車祓い）</div>
-        <div class="chip" onclick="tc(this)">家内安全（社内安全）</div>
-        <div class="chip" onclick="tc(this)">商売繁盛祈願</div>
-        <div class="chip" onclick="tc(this)">建築安全祈願祭</div>
-        <div class="chip" data-oth="jinja" onclick="tc(this)">その他ご祈祷</div>
+        <div class="chip" onclick="toggleChip(this)">初宮詣り（お宮参り）</div>
+        <div class="chip" onclick="toggleChip(this)">七五三詣</div>
+        <div class="chip" onclick="toggleChip(this)">厄除（厄年の方）</div>
+        <div class="chip" onclick="toggleChip(this)">災厄除（厄年以外の方）</div>
+        <div class="chip" onclick="toggleChip(this)">安産祈願（腹帯のお祓い）</div>
+        <div class="chip" onclick="toggleChip(this)">交通安全（車祓い）</div>
+        <div class="chip" onclick="toggleChip(this)">家内安全（社内安全）</div>
+        <div class="chip" onclick="toggleChip(this)">商売繁盛祈願</div>
+        <div class="chip" onclick="toggleChip(this)">建築安全祈願祭</div>
+        <div class="chip" id="chip-jinja-other" onclick="toggleChipOther(this,'oth-jinja')">その他ご祈祷</div>
       </div>
-      <div class="otnote" id="oth-jinja"><label>「その他ご祈祷」の内容をご記入ください</label><textarea placeholder="例：合格祈願、病気平癒、縁結び など"></textarea></div>
+      <div class="otnote" id="oth-jinja">
+        <label>「その他ご祈祷」の内容をご記入ください</label>
+        <textarea placeholder="例：合格祈願、病気平癒、縁結び など"></textarea>
+      </div>
+
       <div class="kdivider"></div>
+
       <div class="grplabel">出張祭典</div>
       <div class="chips">
-        <div class="chip" data-sc onclick="tc(this)">地鎮祭</div>
-        <div class="chip" data-sc onclick="tc(this)">入居清祓い</div>
-        <div class="chip" data-sc onclick="tc(this)">竣工式</div>
-        <div class="chip" data-sc onclick="tc(this)">上棟祭</div>
-        <div class="chip" data-sc onclick="tc(this)">井戸祓い</div>
-        <div class="chip" data-sc onclick="tc(this)">神棚返納</div>
-        <div class="chip" data-sc data-oth="shutcho" onclick="tc(this)">その他出張祭典</div>
+        <div class="chip" onclick="toggleChipSC(this)">地鎮祭</div>
+        <div class="chip" onclick="toggleChipSC(this)">入居清祓い</div>
+        <div class="chip" onclick="toggleChipSC(this)">竣工式</div>
+        <div class="chip" onclick="toggleChipSC(this)">上棟祭</div>
+        <div class="chip" onclick="toggleChipSC(this)">井戸祓い</div>
+        <div class="chip" onclick="toggleChipSC(this)">神棚返納</div>
+        <div class="chip" id="chip-shutcho-other" onclick="toggleChipOtherSC(this,'oth-shutcho')">その他出張祭典</div>
       </div>
-      <div class="otnote" id="oth-shutcho"><label>「その他出張祭典」の内容をご記入ください</label><textarea placeholder="例：開業式、神事 など"></textarea></div>
+      <div class="otnote" id="oth-shutcho">
+        <label>「その他出張祭典」の内容をご記入ください</label>
+        <textarea placeholder="例：開業式、神事 など"></textarea>
+      </div>
+
       <div class="sc-extra" id="sc-extra">
         <h4>神職・荷物のお迎えについて</h4>
         <div class="radio-group">
-          <label class="radio-opt sel" id="opt-ok"><input type="radio" name="muk" value="ok" checked onchange="tr()"><span><div class="rlabel">車での送迎が可能</div><div class="rsub">神職と祭典用具のお迎えをお願いします。</div></span></label>
-          <label class="radio-opt" id="opt-ng"><input type="radio" name="muk" value="ng" onchange="tr()"><span><div class="rlabel">送迎不可（駐車場の提供をお願いします）</div><div class="rsub">神職が車で伺います。駐車スペースのご確保をお願いします。</div></span></label>
+          <label class="radio-opt sel" id="opt-ok">
+            <input type="radio" name="muk" value="ok" checked onchange="toggleRadio()">
+            <span>
+              <div class="rlabel">車での送迎が可能</div>
+              <div class="rsub">神職と祭典用具のお迎えをお願いします。</div>
+            </span>
+          </label>
+          <label class="radio-opt" id="opt-ng">
+            <input type="radio" name="muk" value="ng" onchange="toggleRadio()">
+            <span>
+              <div class="rlabel">送迎不可（駐車場の提供をお願いします）</div>
+              <div class="rsub">神職が車で伺います。駐車スペースのご確保をお願いします。</div>
+            </span>
+          </label>
         </div>
       </div>
     </div>
 
+    <!-- 希望日時 -->
     <div class="fs">
       <h3>ご希望の日時（最大3候補）</h3>
-      <div class="tb1"><div class="tblabel">第1希望</div><div class="fr"><div class="fg"><label>日付</label><input type="date" id="d1"></div><div class="fg"><label>時間</label><div class="tsel"><select class="hr"><option>10</option><option>11</option><option>12</option><option>13</option><option>14</option><option>15</option><option>16</option></select><span>時</span><select class="mn"><option>00</option><option>30</option></select><span>分</span></div></div></div></div>
-      <div class="tb2"><div class="tblabel">第2希望（任意）</div><div class="fr"><div class="fg"><label>日付</label><input type="date" id="d2"></div><div class="fg"><label>時間</label><div class="tsel"><select class="hr"><option>10</option><option>11</option><option>12</option><option>13</option><option>14</option><option>15</option><option>16</option></select><span>時</span><select class="mn"><option>00</option><option>30</option></select><span>分</span></div></div></div></div>
-      <div class="tb3"><div class="tblabel">第3希望（任意）</div><div class="fr"><div class="fg"><label>日付</label><input type="date" id="d3"></div><div class="fg"><label>時間</label><div class="tsel"><select class="hr"><option>10</option><option>11</option><option>12</option><option>13</option><option>14</option><option>15</option><option>16</option></select><span>時</span><select class="mn"><option>00</option><option>30</option></select><span>分</span></div></div></div></div>
-    </div>
-
-    <div class="fs">
-      <h3>ご祈祷をお受けになる方</h3>
-      <div style="font-size:12px;color:#777;margin-bottom:8px">申込者ご本人以外がお受けになる場合はご家族の情報をご入力ください。</div>
-      <div class="fr" style="margin-bottom:7px"><div class="fg"><label>お受けになる方</label><select id="ukeru" onchange="tu(this)"><option value="s">申込者本人</option><option value="f">ご家族（下記に入力）</option></select></div></div>
-      <div id="ud" style="display:none">
-        <div class="fr"><div class="fg"><label>お名前（漢字）</label><input type="text" placeholder="例：田中 太郎"></div><div class="fg"><label>ふりがな</label><input type="text" placeholder="例：たなか たろう"></div></div>
-        <div class="fr"><div class="fg"><label>生年月日</label><input type="date"></div><div class="fg"><label>続柄</label><select><option>ご主人</option><option>奥様</option><option>長男</option><option>長女</option><option>次男</option><option>次女</option><option>その他</option></select></div></div>
+      <div class="tb1">
+        <div class="tblabel">第1希望</div>
+        <div class="fr">
+          <div class="fg"><label>日付</label><input type="date" id="d1"></div>
+          <div class="fg"><label>時間</label><div class="tsel"><select id="h1" class="hr"><option>10</option><option>11</option><option>12</option><option>13</option><option>14</option><option>15</option><option>16</option></select><span>時</span><select id="m1" class="mn"><option>00</option><option>30</option></select><span>分</span></div></div>
+        </div>
+      </div>
+      <div class="tb2">
+        <div class="tblabel">第2希望（任意）</div>
+        <div class="fr">
+          <div class="fg"><label>日付</label><input type="date" id="d2"></div>
+          <div class="fg"><label>時間</label><div class="tsel"><select id="h2" class="hr"><option>10</option><option>11</option><option>12</option><option>13</option><option>14</option><option>15</option><option>16</option></select><span>時</span><select id="m2" class="mn"><option>00</option><option>30</option></select><span>分</span></div></div>
+        </div>
+      </div>
+      <div class="tb3">
+        <div class="tblabel">第3希望（任意）</div>
+        <div class="fr">
+          <div class="fg"><label>日付</label><input type="date" id="d3"></div>
+          <div class="fg"><label>時間</label><div class="tsel"><select id="h3" class="hr"><option>10</option><option>11</option><option>12</option><option>13</option><option>14</option><option>15</option><option>16</option></select><span>時</span><select id="m3" class="mn"><option>00</option><option>30</option></select><span>分</span></div></div>
+        </div>
       </div>
     </div>
 
+    <!-- お受けになる方 -->
     <div class="fs">
-      <h3>お申込者の情報</h3>
-      <div class="fr"><div class="fg"><label>お名前（漢字）</label><input type="text" placeholder="例：田中 花子"></div><div class="fg"><label>ふりがな</label><input type="text" placeholder="例：たなか はなこ"></div></div>
-      <div class="fr"><div class="fg"><label>生年月日</label><input type="date"></div><div class="fg"><label>性別</label><select><option>女性</option><option>男性</option></select></div></div>
-      <div class="fr"><div class="fg"><label>郵便番号</label><input type="text" placeholder="例：660-0001"></div><div class="fg"><label>都道府県</label><select><option value="">選択してください</option><option>北海道</option><option>青森県</option><option>岩手県</option><option>宮城県</option><option>秋田県</option><option>山形県</option><option>福島県</option><option>茨城県</option><option>栃木県</option><option>群馬県</option><option>埼玉県</option><option>千葉県</option><option>東京都</option><option>神奈川県</option><option>新潟県</option><option>富山県</option><option>石川県</option><option>福井県</option><option>山梨県</option><option>長野県</option><option>岐阜県</option><option>静岡県</option><option>愛知県</option><option>三重県</option><option>滋賀県</option><option>京都府</option><option>大阪府</option><option>兵庫県</option><option>奈良県</option><option>和歌山県</option><option>鳥取県</option><option>島根県</option><option>岡山県</option><option>広島県</option><option>山口県</option><option>徳島県</option><option>香川県</option><option>愛媛県</option><option>高知県</option><option>福岡県</option><option>佐賀県</option><option>長崎県</option><option>熊本県</option><option>大分県</option><option>宮崎県</option><option>鹿児島県</option><option>沖縄県</option></select></div></div>
-      <div class="fr"><div class="fg"><label>市区町村</label><input type="text" placeholder="例：尼崎市"></div><div class="fg"><label>番地・建物名</label><input type="text" placeholder="例：東本町1丁目2-3"></div></div>
-      <div class="fr"><div class="fg"><label>電話番号</label><input type="tel" placeholder="例：090-0000-0000"></div><div class="fg"><label>メールアドレス</label><input type="email" placeholder="例：taro@example.com"></div></div>
+      <h3>ご祈祷をお受けになる方</h3>
+      <div style="font-size:12px;color:#777;margin-bottom:8px">申込者ご本人以外がお受けになる場合はご家族の情報をご入力ください。</div>
+      <div class="fr" style="margin-bottom:7px">
+        <div class="fg">
+          <label>お受けになる方</label>
+          <select id="ukeru" onchange="toggleUkeru()">
+            <option value="s">申込者本人</option>
+            <option value="f">ご家族（下記に入力）</option>
+          </select>
+        </div>
+      </div>
+      <div id="ud" style="display:none">
+        <div class="fr">
+          <div class="fg"><label>お名前（漢字）</label><input type="text" id="u-name" placeholder="例：田中 太郎"></div>
+          <div class="fg"><label>ふりがな</label><input type="text" id="u-yomi" placeholder="例：たなか たろう"></div>
+        </div>
+        <div class="fr">
+          <div class="fg"><label>生年月日</label><input type="date" id="u-birth"></div>
+          <div class="fg"><label>続柄</label><select id="u-rel"><option>ご主人</option><option>奥様</option><option>長男</option><option>長女</option><option>次男</option><option>次女</option><option>その他</option></select></div>
+        </div>
+      </div>
     </div>
 
+    <!-- 申込者情報 -->
+    <div class="fs">
+      <h3>お申込者の情報</h3>
+      <div class="fr">
+        <div class="fg"><label>お名前（漢字）</label><input type="text" id="name" placeholder="例：田中 花子"></div>
+        <div class="fg"><label>ふりがな</label><input type="text" id="yomi" placeholder="例：たなか はなこ"></div>
+      </div>
+      <div class="fr">
+        <div class="fg"><label>生年月日</label><input type="date" id="birthday"></div>
+        <div class="fg"><label>性別</label><select id="gender"><option>女性</option><option>男性</option></select></div>
+      </div>
+      <div class="fr">
+        <div class="fg"><label>郵便番号</label><input type="text" id="zip" placeholder="例：660-0001"></div>
+        <div class="fg"><label>都道府県</label>
+          <select id="pref">
+            <option value="">選択してください</option>
+            <option>北海道</option><option>青森県</option><option>岩手県</option><option>宮城県</option><option>秋田県</option><option>山形県</option><option>福島県</option><option>茨城県</option><option>栃木県</option><option>群馬県</option><option>埼玉県</option><option>千葉県</option><option>東京都</option><option>神奈川県</option><option>新潟県</option><option>富山県</option><option>石川県</option><option>福井県</option><option>山梨県</option><option>長野県</option><option>岐阜県</option><option>静岡県</option><option>愛知県</option><option>三重県</option><option>滋賀県</option><option>京都府</option><option>大阪府</option><option>兵庫県</option><option>奈良県</option><option>和歌山県</option><option>鳥取県</option><option>島根県</option><option>岡山県</option><option>広島県</option><option>山口県</option><option>徳島県</option><option>香川県</option><option>愛媛県</option><option>高知県</option><option>福岡県</option><option>佐賀県</option><option>長崎県</option><option>熊本県</option><option>大分県</option><option>宮崎県</option><option>鹿児島県</option><option>沖縄県</option>
+          </select>
+        </div>
+      </div>
+      <div class="fr">
+        <div class="fg"><label>市区町村</label><input type="text" id="city" placeholder="例：尼崎市"></div>
+        <div class="fg"><label>番地・建物名</label><input type="text" id="address" placeholder="例：東本町1丁目2-3"></div>
+      </div>
+      <div class="fr">
+        <div class="fg"><label>電話番号</label><input type="tel" id="tel" placeholder="例：090-0000-0000"></div>
+        <div class="fg"><label>メールアドレス</label><input type="email" id="email" placeholder="例：taro@example.com"></div>
+      </div>
+    </div>
+
+    <!-- ご家族 -->
     <div class="fs">
       <h3>ご家族の情報（任意）</h3>
       <div style="font-size:12px;color:#777;margin-bottom:10px">ご家族を登録いただくと、厄年や七五三の時期にご案内をお送りできます。</div>
       <div class="family-list" id="family-list"></div>
-      <button class="btns" onclick="addFamily()">＋ ご家族を追加する</button>
+      <button type="button" class="btns" onclick="addFamily()">＋ ご家族を追加する</button>
     </div>
 
+    <!-- 案内 -->
     <div class="fs">
       <h3>神社からのご案内について</h3>
       <div class="nbox">
         <p>ご希望の方には、厄年・七五三・初詣などの時期に神社よりご案内をお送りいたします。ご不要の場合はチェック不要です。いつでも解除できます。</p>
-        <div class="nchks" onchange="un()">
-          <label class="nchk"><input type="checkbox"><span><div class="nct">厄年のご案内を希望する</div><div class="ncs">ご本人・ご家族の厄年前（前厄・本厄・後厄）にお知らせします</div></span></label>
-          <label class="nchk"><input type="checkbox"><span><div class="nct">七五三のご案内を希望する</div><div class="ncs">お子様の対象年齢の前年にお知らせします。</div></span></label>
-          <label class="nchk"><input type="checkbox"><span><div class="nct">季節の行事・お祭りのご案内を希望する</div><div class="ncs">初詣・節分・夏祭りなど</div></span></label>
+        <div class="nchks">
+          <label class="nchk"><input type="checkbox" id="nc1" onchange="updateNotice()"><span><div class="nct">厄年のご案内を希望する</div><div class="ncs">ご本人・ご家族の厄年前（前厄・本厄・後厄）にお知らせします</div></span></label>
+          <label class="nchk"><input type="checkbox" id="nc2" onchange="updateNotice()"><span><div class="nct">七五三のご案内を希望する</div><div class="ncs">お子様の対象年齢の前年にお知らせします。</div></span></label>
+          <label class="nchk"><input type="checkbox" id="nc3" onchange="updateNotice()"><span><div class="nct">季節の行事・お祭りのご案内を希望する</div><div class="ncs">初詣・節分・夏祭りなど</div></span></label>
         </div>
         <div class="nmeth" id="nmeth">
           <label>ご案内の受け取り方法</label>
-          <select id="notice-method" style="width:auto;padding:6px 10px;border:1px solid #ccc;border-radius:8px;font-size:13px" onchange="ul()">
-            <option>メールで受け取る</option>
+          <select id="notice-method" style="width:auto;padding:6px 10px;border:1px solid #ccc;border-radius:8px;font-size:13px" onchange="updateLineId()">
+            <option value="mail">メールで受け取る</option>
             <option value="line">LINEで受け取る</option>
             <option value="both">メール・LINEどちらも</option>
           </select>
           <div class="line-id" id="line-id">
             <label style="margin-top:8px">LINEのID または 表示名</label>
-            <input type="text" placeholder="例：@taro_yamada">
+            <input type="text" id="line-id-input" placeholder="例：@taro_yamada">
           </div>
         </div>
       </div>
     </div>
+
+    <!-- 備考 -->
     <div class="fs">
       <h3>備考</h3>
       <div class="fg">
         <label>上記以外でお伝えしたいこと、ご質問があればご記入ください（任意）</label>
-        <textarea placeholder="" style="min-height:90px"></textarea>
+        <textarea id="biko" style="min-height:90px"></textarea>
       </div>
     </div>
-    <button class="btnm" onclick="submitForm()">申込内容を送信する →</button>
+
+    <button type="button" class="btnm" id="submit-btn" onclick="submitForm()">申込内容を送信する →</button>
   </div>
 
   <div class="fw" id="complete-view" style="display:none">
@@ -185,134 +279,164 @@ body{background:#f5f0eb;color:#2c2c2a;min-height:100vh}
 </div>
 
 <script>
-var familyCount=0;
+var GAS_URL = 'https://script.google.com/macros/s/AKfycbyOgWwprEk874-7kfp9r3_Cz_RnwhOjDQYs_5Q70zLozuDDa4rRo51C9V15Ac-yBLAY/exec';
+var familyCount = 0;
 
-function tc(el){
+function toggleChip(el) {
   el.classList.toggle('on');
-  const o=el.dataset.oth;
-  if(o)document.getElementById('oth-'+o).classList.toggle('show',el.classList.contains('on'));
-  const any=[...document.querySelectorAll('[data-sc].on')].length>0;
-  document.getElementById('sc-extra').classList.toggle('show',any);
 }
-function tr(){
-  document.getElementById('opt-ok').classList.toggle('sel',document.querySelector('[name=muk][value=ok]').checked);
-  document.getElementById('opt-ng').classList.toggle('sel',document.querySelector('[name=muk][value=ng]').checked);
+
+function toggleChipOther(el, noteId) {
+  el.classList.toggle('on');
+  document.getElementById(noteId).classList.toggle('show', el.classList.contains('on'));
 }
-function tu(s){document.getElementById('ud').style.display=s.value==='f'?'block':'none';}
-function un(){
-  const any=[...document.querySelectorAll('.nchks input')].some(c=>c.checked);
-  document.getElementById('nmeth').classList.toggle('show',any);
+
+function toggleChipSC(el) {
+  el.classList.toggle('on');
+  updateSCExtra();
 }
-function ul(){
-  const v=document.getElementById('notice-method').value;
-  const show=(v==='line'||v==='both');
-  document.getElementById('line-id').classList.toggle('show',show);
+
+function toggleChipOtherSC(el, noteId) {
+  el.classList.toggle('on');
+  document.getElementById(noteId).classList.toggle('show', el.classList.contains('on'));
+  updateSCExtra();
 }
-function addFamily(){
+
+function updateSCExtra() {
+  var scChips = document.querySelectorAll('[onclick*="ChipSC"]');
+  var any = false;
+  scChips.forEach(function(c){ if(c.classList.contains('on')) any = true; });
+  document.getElementById('sc-extra').classList.toggle('show', any);
+}
+
+function toggleRadio() {
+  document.getElementById('opt-ok').classList.toggle('sel', document.querySelector('[name=muk][value=ok]').checked);
+  document.getElementById('opt-ng').classList.toggle('sel', document.querySelector('[name=muk][value=ng]').checked);
+}
+
+function toggleUkeru() {
+  var val = document.getElementById('ukeru').value;
+  document.getElementById('ud').style.display = val === 'f' ? 'block' : 'none';
+}
+
+function updateNotice() {
+  var any = document.getElementById('nc1').checked || document.getElementById('nc2').checked || document.getElementById('nc3').checked;
+  document.getElementById('nmeth').classList.toggle('show', any);
+}
+
+function updateLineId() {
+  var val = document.getElementById('notice-method').value;
+  document.getElementById('line-id').classList.toggle('show', val === 'line' || val === 'both');
+}
+
+function addFamily() {
   familyCount++;
-  const id='fam-'+familyCount;
-  const div=document.createElement('div');
-  div.className='fbox';
-  div.id=id;
-  div.innerHTML=`
-    <button class="del" onclick="removeFamily('${id}')">×</button>
-    <div style="font-size:12px;font-weight:600;color:#7A3B0F;margin-bottom:8px">ご家族 ${familyCount}人目</div>
-    <div class="fr"><div class="fg"><label>お名前（漢字）</label><input type="text" placeholder="例：田中 太郎"></div><div class="fg"><label>ふりがな</label><input type="text" placeholder="例：たなか たろう"></div></div>
-    <div class="fr"><div class="fg"><label>生年月日</label><input type="date"></div><div class="fg"><label>続柄</label><select><option>ご主人</option><option>奥様</option><option>長男</option><option>長女</option><option>次男</option><option>次女</option><option>その他</option></select></div></div>
-  `;
+  var id = 'fam-' + familyCount;
+  var div = document.createElement('div');
+  div.className = 'fbox';
+  div.id = id;
+  div.innerHTML =
+    '<button type="button" class="del" onclick="removeFamily(\'' + id + '\')">×</button>' +
+    '<div style="font-size:12px;font-weight:600;color:#7A3B0F;margin-bottom:8px">ご家族 ' + familyCount + '人目</div>' +
+    '<div class="fr">' +
+      '<div class="fg"><label>お名前（漢字）</label><input type="text" placeholder="例：田中 太郎"></div>' +
+      '<div class="fg"><label>ふりがな</label><input type="text" placeholder="例：たなか たろう"></div>' +
+    '</div>' +
+    '<div class="fr">' +
+      '<div class="fg"><label>生年月日</label><input type="date"></div>' +
+      '<div class="fg"><label>続柄</label><select><option>ご主人</option><option>奥様</option><option>長男</option><option>長女</option><option>次男</option><option>次女</option><option>その他</option></select></div>' +
+    '</div>';
   document.getElementById('family-list').appendChild(div);
 }
-function removeFamily(id){document.getElementById(id).remove();}
-function getFormData(){
-  // 祈祷内容
-  var kito=[...document.querySelectorAll('.chip.on')].map(c=>c.textContent.trim()).join('、');
-  // その他内容
-  var otJinja=document.querySelector('#oth-jinja textarea');
-  var otShutcho=document.querySelector('#oth-shutcho textarea');
-  if(otJinja&&otJinja.value)kito+='（その他：'+otJinja.value+'）';
-  if(otShutcho&&otShutcho.value)kito+='（出張その他：'+otShutcho.value+'）';
-  // 希望日時
-  function getTime(hrSel,mnSel){var h=hrSel?hrSel.value:'';var m=mnSel?mnSel.value:'';return h?h+'時'+m+'分':'';}
-  var tSels=document.querySelectorAll('.tsel');
-  var d1=document.getElementById('d1').value+' '+getTime(tSels[0]&&tSels[0].querySelector('.hr'),tSels[0]&&tSels[0].querySelector('.mn'));
-  var d2=document.getElementById('d2').value+' '+getTime(tSels[1]&&tSels[1].querySelector('.hr'),tSels[1]&&tSels[1].querySelector('.mn'));
-  var d3=document.getElementById('d3').value+' '+getTime(tSels[2]&&tSels[2].querySelector('.hr'),tSels[2]&&tSels[2].querySelector('.mn'));
-  // お受けになる方
-  var ukeruSel=document.getElementById('ukeru');
-  var ukeru=ukeruSel.value==='s'?'申込者本人':'ご家族';
-  if(ukeruSel.value==='f'){
-    var udInputs=document.querySelectorAll('#ud input,#ud select');
-    var uname=udInputs[0]?udInputs[0].value:'';
-    var urel=udInputs[3]?udInputs[3].value:'';
-    ukeru=uname+'（'+urel+'）';
-  }
-  // 申込者情報
-  var inputs=document.querySelectorAll('.fs input[type=text],.fs input[type=tel],.fs input[type=email],.fs input[type=date],.fs select');
-  var flds={};
-  document.querySelectorAll('.fs').forEach(function(fs){
-    var h=fs.querySelector('h3');
-    if(!h||h.textContent.indexOf('お申込者')===−1)return;
-    var ins=fs.querySelectorAll('input,select');
-    flds.name=ins[0]?ins[0].value:'';
-    flds.yomi=ins[1]?ins[1].value:'';
-    flds.birthday=ins[2]?ins[2].value:'';
-    flds.gender=ins[3]?ins[3].value:'';
-    flds.zip=ins[4]?ins[4].value:'';
-    flds.pref=ins[5]?ins[5].value:'';
-    flds.city=ins[6]?ins[6].value:'';
-    flds.address=ins[7]?ins[7].value:'';
-    flds.tel=ins[8]?ins[8].value:'';
-    flds.email=ins[9]?ins[9].value:'';
-  });
-  // 送迎
-  var muk=document.querySelector('[name=muk]:checked');
-  var mukVal=muk?muk.value:'';
-  // 案内希望
-  var noticeChks=[...document.querySelectorAll('.nchks input:checked')].map(c=>{var l=c.closest('label');return l?l.querySelector('.nct').textContent:'';}).join('、');
-  var noticeMethod=document.getElementById('notice-method')?document.getElementById('notice-method').value:'';
-  var lineId=document.querySelector('#line-id input')?document.querySelector('#line-id input').value:'';
-  // 家族情報
-  var families=[];
-  document.querySelectorAll('.fbox').forEach(function(fb){
-    var ins=fb.querySelectorAll('input,select');
-    var fn=ins[0]?ins[0].value:'';
-    var fy=ins[2]?ins[2].value:'';
-    var fr=ins[3]?ins[3].value:'';
-    if(fn)families.push(fn+'（'+fr+'）生年月日:'+fy);
-  });
-  // 備考
-  var bikoTA=document.querySelector('.fs:last-of-type textarea');
-  var biko=bikoTA?bikoTA.value:'';
-  return{
-    kito:kito,d1:d1.trim(),d2:d2.trim(),d3:d3.trim(),
-    ukeru:ukeru,mukaeri:mukVal,
-    name:flds.name||'',yomi:flds.yomi||'',birthday:flds.birthday||'',gender:flds.gender||'',
-    zip:flds.zip||'',pref:flds.pref||'',city:flds.city||'',address:flds.address||'',
-    tel:flds.tel||'',email:flds.email||'',
-    notice:noticeChks,noticeMethod:noticeMethod,lineId:lineId,
-    family:families.join(' / '),biko:biko
-  };
+
+function removeFamily(id) {
+  var el = document.getElementById(id);
+  if (el) el.remove();
 }
 
-function submitForm(){
-  var btn=document.querySelector('.btnm');
-  btn.textContent='送信中...';
-  btn.disabled=true;
-  var data=getFormData();
-  var GAS_URL='https://script.google.com/macros/s/AKfycbyOgWwprEk874-7kfp9r3_Cz_RnwhOjDQYs_5Q70zLozuDDa4rRo51C9V15Ac-yBLAY/exec';
-  fetch(GAS_URL,{
-    method:'POST',
-    mode:'no-cors',
-    headers:{'Content-Type':'application/json'},
-    body:JSON.stringify(data)
+function getVal(id) {
+  var el = document.getElementById(id);
+  return el ? el.value : '';
+}
+
+function submitForm() {
+  var btn = document.getElementById('submit-btn');
+  btn.textContent = '送信中...';
+  btn.disabled = true;
+
+  // 祈祷内容収集
+  var kitoArr = [];
+  document.querySelectorAll('.chip.on').forEach(function(c){ kitoArr.push(c.textContent.trim()); });
+  var otJinja = document.querySelector('#oth-jinja textarea');
+  var otShutcho = document.querySelector('#oth-shutcho textarea');
+  if (otJinja && otJinja.value) kitoArr.push('その他ご祈祷：' + otJinja.value);
+  if (otShutcho && otShutcho.value) kitoArr.push('その他出張祭典：' + otShutcho.value);
+  var kito = kitoArr.join('、');
+
+  // 希望日時
+  var d1 = getVal('d1') + (getVal('d1') ? ' ' + getVal('h1') + '時' + getVal('m1') + '分' : '');
+  var d2 = getVal('d2') + (getVal('d2') ? ' ' + getVal('h2') + '時' + getVal('m2') + '分' : '');
+  var d3 = getVal('d3') + (getVal('d3') ? ' ' + getVal('h3') + '時' + getVal('m3') + '分' : '');
+
+  // お受けになる方
+  var ukeru = '申込者本人';
+  if (document.getElementById('ukeru').value === 'f') {
+    var uname = getVal('u-name');
+    var urel = getVal('u-rel');
+    ukeru = uname + '（' + urel + '）';
+  }
+
+  // 送迎
+  var mukEl = document.querySelector('[name=muk]:checked');
+  var muk = mukEl ? (mukEl.value === 'ok' ? '送迎可' : '駐車場提供') : '';
+
+  // 案内
+  var noticeArr = [];
+  if (document.getElementById('nc1').checked) noticeArr.push('厄年');
+  if (document.getElementById('nc2').checked) noticeArr.push('七五三');
+  if (document.getElementById('nc3').checked) noticeArr.push('行事');
+  var notice = noticeArr.join('、');
+  var noticeMethod = getVal('notice-method');
+  var lineId = getVal('line-id-input');
+
+  // 家族
+  var families = [];
+  document.querySelectorAll('.fbox').forEach(function(fb){
+    var ins = fb.querySelectorAll('input');
+    var sels = fb.querySelectorAll('select');
+    var fn = ins[0] ? ins[0].value : '';
+    var fb2 = ins[1] ? ins[1].value : '';
+    var rel = sels[0] ? sels[0].value : '';
+    if (fn) families.push(fn + '（' + rel + '）' + (fb2 ? ' 生年月日:' + fb2 : ''));
+  });
+
+  var data = {
+    kito: kito,
+    d1: d1.trim(), d2: d2.trim(), d3: d3.trim(),
+    ukeru: ukeru, mukaeri: muk,
+    name: getVal('name'), yomi: getVal('yomi'),
+    birthday: getVal('birthday'), gender: getVal('gender'),
+    zip: getVal('zip'), pref: getVal('pref'),
+    city: getVal('city'), address: getVal('address'),
+    tel: getVal('tel'), email: getVal('email'),
+    notice: notice, noticeMethod: noticeMethod, lineId: lineId,
+    family: families.join(' / '),
+    biko: getVal('biko')
+  };
+
+  fetch(GAS_URL, {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify(data)
   }).then(function(){
-    document.getElementById('form-view').style.display='none';
-    document.getElementById('complete-view').style.display='block';
-    window.scrollTo(0,0);
+    document.getElementById('form-view').style.display = 'none';
+    document.getElementById('complete-view').style.display = 'block';
+    window.scrollTo(0, 0);
   }).catch(function(){
-    document.getElementById('form-view').style.display='none';
-    document.getElementById('complete-view').style.display='block';
-    window.scrollTo(0,0);
+    document.getElementById('form-view').style.display = 'none';
+    document.getElementById('complete-view').style.display = 'block';
+    window.scrollTo(0, 0);
   });
 }
 </script>
