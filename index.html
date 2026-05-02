@@ -373,10 +373,19 @@ function submitForm() {
   if (otShutcho && otShutcho.value) kitoArr.push('その他出張祭典：' + otShutcho.value);
   var kito = kitoArr.join('、');
 
-  // 希望日時
-  var d1 = getVal('d1') + (getVal('d1') ? ' ' + getVal('h1') + '時' + getVal('m1') + '分' : '');
-  var d2 = getVal('d2') + (getVal('d2') ? ' ' + getVal('h2') + '時' + getVal('m2') + '分' : '');
-  var d3 = getVal('d3') + (getVal('d3') ? ' ' + getVal('h3') + '時' + getVal('m3') + '分' : '');
+  // 希望日時（日本語形式）
+  var YOUBI = ['日','月','火','水','木','金','土'];
+  function fmtDate(dateVal, h, m) {
+    if (!dateVal) return '';
+    var d = new Date(dateVal + 'T00:00:00');
+    var mo = d.getMonth() + 1;
+    var day = d.getDate();
+    var yw = YOUBI[d.getDay()];
+    return d.getFullYear() + '/' + mo + '/' + day + '(' + yw + ') ' + h + ':' + m;
+  }
+  var d1 = fmtDate(getVal('d1'), getVal('h1'), getVal('m1'));
+  var d2 = fmtDate(getVal('d2'), getVal('h2'), getVal('m2'));
+  var d3 = fmtDate(getVal('d3'), getVal('h3'), getVal('m3'));
 
   // お受けになる方
   var ukeru = '申込者本人';
